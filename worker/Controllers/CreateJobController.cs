@@ -10,7 +10,7 @@ namespace worker.Controllers
         {
             return new JobResult
             {
-                JobId = createJobRequest.JobId,
+                JobId = createJobRequest.JobId, 
                 Result = createJobRequest.Calculation
             };
         }

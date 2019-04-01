@@ -5,7 +5,28 @@
 }
 
 <h2>Registered Workers</h2>
+<ul>
+    @foreach (var worker in Model.ActiveWorkers)
+    {
+        <li>@worker.TeamName (@worker.WorkerId) has answered correctly @worker.CorrectResponses times and incorrectly @worker.IncorrectResponses times</li>
+    }
+</ul>
 
 <h2>Jobs</h2>
 
 <h2>Expired Workers</h2>
+<ul>
+    @foreach (var worker in Model.InactiveWorkers)
+    {
+        <li>@worker.TeamName (@worker.WorkerId) has been removed after 3 failures to accept a new job.</li>
+    }
+</ul>
+
+@section Scripts
+    {
+    <script language="javascript">
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 2000);
+    </script>
+}

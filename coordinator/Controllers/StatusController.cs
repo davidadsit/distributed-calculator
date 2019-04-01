@@ -1,13 +1,28 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using coordinator.Application;
+using coordinator.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace coordinator.Controllers
 {
     public class StatusController : Controller
     {
-        // GET
-        public IActionResult Index()
+        private readonly IWorkerRegistry workerRegistry;
+
+        public StatusController(IWorkerRegistry workerRegistry)
         {
-            return View();
+            this.workerRegistry = workerRegistry;
+        }
+
+        public ActionResult Index()
+        {
+            return View(new StatusResult
+            {
+                ActiveWorkers = workerRegistry.ActiveWorkers,
+                InactiveWorkers = workerRegistry.InactiveWorkers,
+            });
         }
     }
 }

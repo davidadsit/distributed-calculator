@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 
 namespace coordinator.Application
 {
     public interface IWorkerRegistry
     {
-        IEnumerable<WorkerRegistration> ActiveWorkers { get; }
         WorkerRegistrationResult RegisterWorker(WorkerRegistration workerRegistration);
         void DeregisterWorker(Guid workerId);
+        IEnumerable<WorkerRegistration> ActiveWorkers { get; }
+        IEnumerable<WorkerRegistration> InactiveWorkers { get; }
+        IObservable<IEnumerable<WorkerRegistration>> GetActiveWorkers();
+        IObservable<IEnumerable<WorkerRegistration>> GetAInactiveWorkers();
     }
 
     public class WorkerRegistry : IWorkerRegistry
@@ -39,6 +44,10 @@ namespace coordinator.Application
             if (workers.ContainsKey(workerId)) workers.Remove(workerId);
         }
 
-        public IEnumerable<WorkerRegistration> ActiveWorkers => workers.Values;
+        public IEnumerable<WorkerRegistration> ActiveWorkers => workers.Values.Where(x => x.FailedResponses < 4);
+        public IEnumerable<WorkerRegistration> InactiveWorkers => workers.Values.Where(x => x.FailedResponses > 3);
+
+        public IObservable<IEnumerable<WorkerRegistration>> GetActiveWorkers() => Observable.Return(ActiveWorkers);
+        public IObservable<IEnumerable<WorkerRegistration>> GetAInactiveWorkers() => Observable.Return(InactiveWorkers);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
@@ -79,11 +80,13 @@ namespace coordinator.Application
                 }
                 else
                 {
+                    worker.IncorrectResponses++;
                     SendErrorNotice(worker, jobRequest.JobId, "Incorrect solution provided");
                 }
             }
             catch (Exception e)
             {
+                worker.FailedResponses++;
                 logger.LogInformation($"Failed to send job {{{jobRequest.JobId}}} ({jobRequest.Calculation}) to {{{worker.WorkerId}}} ({worker.CreateJobEndpoint}).");
                 SendErrorNotice(worker, jobRequest.JobId, e.Message);
             }
