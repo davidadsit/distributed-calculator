@@ -11,4 +11,10 @@
     <PackageReference Include="Scrutor" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>..\..\..\Users\david\.nuget\packages\restsharp\106.6.9\lib\netstandard2.0\RestSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

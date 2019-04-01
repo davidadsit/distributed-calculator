@@ -6,7 +6,7 @@ namespace worker.Controllers
     public class CreateJobController : Controller
     {
         [HttpPost]
-        public JobResult Index(CreateJobRequest createJobRequest)
+        public JobResult Index([FromBody] CreateJobRequest createJobRequest)
         {
             return new JobResult
             {

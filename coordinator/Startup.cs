@@ -28,6 +28,9 @@ namespace coordinator
             });
 
             services.AddSingleton<IWorkerRegistry, WorkerRegistry>();
+            services.AddTransient<IJobPool, JobPool>();
+
+            services.AddHostedService<JobAssignmentService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
