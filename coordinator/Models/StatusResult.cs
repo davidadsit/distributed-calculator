@@ -7,5 +7,6 @@ namespace coordinator.Models
     {
         public IEnumerable<WorkerRegistration> ActiveWorkers { get; set; }
         public IEnumerable<WorkerRegistration> InactiveWorkers { get; set; }
+        public IEnumerable<Assignment> RecentJobs { get; set; }
     }
 }

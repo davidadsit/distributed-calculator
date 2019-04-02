@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -13,15 +14,17 @@ namespace coordinator.Application
     public class JobAssignmentService : IHostedService, IDisposable
     {
         private readonly IJobPool jobPool;
+        private readonly IJobAssignments jobAssignments;
         private readonly ILogger logger;
         private readonly IWorkerRegistry workerRegistry;
         private Timer timer;
 
-        public JobAssignmentService(ILogger<JobAssignmentService> logger, IWorkerRegistry workerRegistry, IJobPool jobPool)
+        public JobAssignmentService(ILogger<JobAssignmentService> logger, IWorkerRegistry workerRegistry, IJobPool jobPool, IJobAssignments jobAssignments)
         {
             this.logger = logger;
             this.workerRegistry = workerRegistry;
             this.jobPool = jobPool;
+            this.jobAssignments = jobAssignments;
         }
 
         public void Dispose()
@@ -73,6 +76,7 @@ namespace coordinator.Application
                 logger.LogInformation($"Raw response {response.Content}");
                 var jobResponse = JsonConvert.DeserializeObject<JobResponse>(response.Content);
                 logger.LogInformation($"Sent job {{{jobRequest.JobId}}} ({jobRequest.Calculation}) to {{{worker.WorkerId}}} ({worker.CreateJobEndpoint}) and got {jobResponse.Result} in response.");
+                jobAssignments.AssignJob(worker, job);
 
                 if (jobResponse.Result == job.Solution)
                 {

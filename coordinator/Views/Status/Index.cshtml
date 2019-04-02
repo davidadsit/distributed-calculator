@@ -13,6 +13,12 @@
 </ul>
 
 <h2>Jobs</h2>
+<ul>
+    @foreach (var assignment in Model.RecentJobs)
+    {
+        <li>@assignment.TeamName (@assignment.WorkerId) has been assigned '@assignment.Problem'.</li>
+    }
+</ul>
 
 <h2>Expired Workers</h2>
 <ul>

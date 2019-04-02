@@ -28,6 +28,8 @@ namespace coordinator
             });
 
             services.AddSingleton<IWorkerRegistry, WorkerRegistry>();
+            services.AddSingleton<IJobAssignments, JobAssignments>();
+
             services.AddTransient<IJobPool, JobPool>();
 
             services.AddHostedService<JobAssignmentService>();
