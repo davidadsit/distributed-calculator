@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using coordinator.Application;
+﻿using coordinator.Application;
 using coordinator.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +18,7 @@ namespace coordinator.Controllers
             return View(new StatusResult
             {
                 ActiveWorkers = workerRegistry.ActiveWorkers,
-                InactiveWorkers = workerRegistry.InactiveWorkers,
+                InactiveWorkers = workerRegistry.InactiveWorkers
             });
         }
     }
