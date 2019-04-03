@@ -25,7 +25,7 @@ namespace coordinator.Application
             });
         }
 
-        public IEnumerable<Assignment> RecentAssignments => assignments.OrderByDescending(x => x.AssignedAt).Take(20).ToArray();
+        public IEnumerable<Assignment> RecentAssignments => assignments.OrderByDescending(x => x.AssignedAt).Take(35).ToArray();
     }
 
     public class Assignment

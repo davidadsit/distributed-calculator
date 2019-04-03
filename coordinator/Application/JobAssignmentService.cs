@@ -78,6 +78,7 @@ namespace coordinator.Application
                 logger.LogInformation($"Sent job {{{jobRequest.JobId}}} ({jobRequest.Calculation}) to {{{worker.WorkerId}}} ({worker.CreateJobEndpoint}) and got {jobResponse.Result} in response. Expected {job.Solution}.");
                 jobAssignments.AssignJob(worker, job);
 
+                worker.FailedResponses = 0;
                 if (jobResponse.Result == job.Solution)
                 {
                     worker.CorrectResponses++;

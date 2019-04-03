@@ -3,14 +3,14 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://192.168.86.48:6010"
+      "applicationUrl": "http://192.168.1.22:6010"
     }
   },
   "profiles": {
     "worker": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://192.168.86.48:6010",
+      "applicationUrl": "http://192.168.1.22:6010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

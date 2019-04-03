@@ -24,7 +24,7 @@
 <ul>
     @foreach (var worker in Model.InactiveWorkers)
     {
-        <li>@worker.TeamName (@worker.WorkerId) has been removed after 3 failures to accept a new job.</li>
+        <li>@worker.TeamName (@worker.WorkerId) has been removed after 3 consecutive failures to accept a new job.</li>
     }
 </ul>
 

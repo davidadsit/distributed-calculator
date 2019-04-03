@@ -18,10 +18,28 @@ namespace worker.Controllers
         public JobResult Index([FromBody] CreateJobRequest createJobRequest)
         {
             logger.LogDebug($"PROBLEM:  {JsonConvert.SerializeObject(createJobRequest)}");
+            decimal result = 0;
+            var parts = createJobRequest.Calculation.Split(' ');
+            switch (parts[2])
+            {
+                case "+":
+                    result = decimal.Parse(parts[1]) + decimal.Parse(parts[3]);
+                    break;
+                case "-":
+                    result = decimal.Parse(parts[1]) - decimal.Parse(parts[3]);
+                    break;
+                case "/":
+                    result = decimal.Parse(parts[1]) / decimal.Parse(parts[3]);
+                    break;
+                case "*":
+                    result = decimal.Parse(parts[1]) * decimal.Parse(parts[3]);
+                    break;
+            }
+
             var jobResult = new JobResult
             {
                 JobId = createJobRequest.JobId,
-                Result = "7"
+                Result = $"{result:0.###}"
             };
             logger.LogDebug($"SOLUTION: {JsonConvert.SerializeObject(jobResult)}");
             return jobResult;
