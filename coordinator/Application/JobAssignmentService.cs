@@ -75,7 +75,7 @@ namespace coordinator.Application
                 var response = client.Execute(request);
                 logger.LogInformation($"Raw response {response.Content}");
                 var jobResponse = JsonConvert.DeserializeObject<JobResponse>(response.Content);
-                logger.LogInformation($"Sent job {{{jobRequest.JobId}}} ({jobRequest.Calculation}) to {{{worker.WorkerId}}} ({worker.CreateJobEndpoint}) and got {jobResponse.Result} in response.");
+                logger.LogInformation($"Sent job {{{jobRequest.JobId}}} ({jobRequest.Calculation}) to {{{worker.WorkerId}}} ({worker.CreateJobEndpoint}) and got {jobResponse.Result} in response. Expected {job.Solution}.");
                 jobAssignments.AssignJob(worker, job);
 
                 if (jobResponse.Result == job.Solution)
