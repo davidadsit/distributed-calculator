@@ -16,7 +16,7 @@ namespace coordinator.Controllers
         [HttpPost]
         public RegistrationResult Index([FromBody] RegistrationRequest registrationRequest)
         {
-            var workerRegistrationResult = workerRegistry.RegisterWorker(new WorkerRegistration()
+            var workerRegistrationResult = workerRegistry.RegisterWorker(new WorkerRegistration
             {
                 WorkerId = registrationRequest.WorkerId,
                 TeamName = registrationRequest.TeamName,
