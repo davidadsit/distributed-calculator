@@ -8,4 +8,73 @@
     <p>In this project, we are building a distributed system. This system has a coordinator component (this site) and many workers that process individual jobs.</p>
     <p>In the first iteration, the workers will be processing math problems and returning the results to the coordinator. Once we have mastered that, we expect to have them to much more challenging jobs.</p>
     <p>The ivory tower architects have spent the last 14 month developing this coordinator and they are now ready for you and your team to start building one of the many workers.</p>
+    <h3>Worker Specification</h3>
+    <p>
+        Each worker will expose two HTTP endpoints:
+        <ul>
+            <li>POST CreateJob</li>
+            <li>POST ErrorCheck</li>
+        </ul>
+        Workers must be registered when they come online and are ready to receive jobs.
+    </p>
+    <h4>POST CreateJob Specification</h4>
+    <p>This endpoint will receive requests and respond with the solution. In the future, we will extend the system to return responses asynchronously, but this is just the first version.</p>
+    <pre>
+{
+    "jobId": "&lt;guid&gt;",
+    "calculation": "CALCULATE: &lt;problem to solve&gt;"
+}
+</pre>
+    <p>The responses will be of the following form:</p>
+    <pre>
+{
+    "jobId": "&lt;guid&gt;",
+    "result": "&lt;solution&gt;"
+}
+</pre>
+    <h4>POST ErrorCheck Specification</h4>
+    <p>The coordinator node will do error checking on provided solutions to ensure that the workers are behaving to specification. When errors are detected, they will be sent to this endpoint.</p>
+    <pre>
+{
+    "jobId": "&lt;guid&gt;",
+    "errorMessage": "&lt;error message&gt;"
+}
+</pre>
+    <p>No response is accepted. The worker is expected to use the jobId to coordinate the problem, solution, and any error messages.</p>
+    <h4>POST http://192.168.86.48:6005/register Specification</h4>
+    <p>Workers must by registered by posting to the registration endpoint.</p>
+    <pre>
+{
+    "workerId": "&lt;guid&gt;",
+    "teamName": "&lt;so we know who to talk to about the worker&gt;",
+    "createJobEndpoint": "&lt;the URL that will receive the jobs&gt;",
+    "errorCheckEndpoint": "&lt;the URL that will receive error messages&gt;"
+}
+</pre>
+    <p>The responses will be of the following form:</p>
+    <pre>
+{
+    "result": "&lt;a message describing the registration outcome&gt;"
+}
+</pre>
+    <p>Workers that fail to responded will be de-registered and no further jobs will be assigned.</p>
+    <h3>Job Specification</h3>
+    <p>
+        Each job will have a command indicating what type of operation is expected. In this initial iteration, all jobs will have the 'CALCULATE: ' instruction. The coordinator will test the fitness of each registered workers by
+        sending increasingly complex math problems to workers as they answer correctly. For example:
+        <ul>
+            <li>CALCULATE: 1 + 2</li>
+            <li>CALCULATE: 12 * 9</li>
+            <li>CALCULATE: (68 - 5) / 7</li>
+        </ul>
+    </p>
+    <h3>Solutions</h3>
+    <P>
+        There are 2 obvious start points for solving this problem:
+        <ol>
+            <li>Code a worker that can be registered and receive jobs</li>
+            <li>Code a string calculator that can solve math problems of various levels of complexity</li>
+        </ol>
+        Gather a team who wants to approach the problem from the same starting point you do and be sure to test drive your solution. Good luck! 
+    </P>
 </div>
