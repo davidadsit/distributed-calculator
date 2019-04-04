@@ -1,4 +1,5 @@
-﻿using coordinator.Application;
+﻿using System;
+using coordinator.Application;
 using coordinator.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,15 @@ namespace coordinator.Controllers
         [HttpPost]
         public RegistrationResult Index([FromBody] RegistrationRequest registrationRequest)
         {
+            try
+            {
+                new Uri(registrationRequest.CreateJobEndpoint);
+                new Uri(registrationRequest.ErrorCheckEndpoint);
+            }
+            catch (Exception e)
+            {
+                return new RegistrationResult(){Result = "You must provide valid URIs for the CreateJob and ErrorCheck endpoints"};
+            }
             var workerRegistrationResult = workerRegistry.RegisterWorker(new WorkerRegistration
             {
                 WorkerId = registrationRequest.WorkerId,

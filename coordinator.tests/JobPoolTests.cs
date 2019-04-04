@@ -88,5 +88,12 @@ namespace coordinator.tests
             Assert.That(Regex.IsMatch(job.Problem, threeOperandPattern));
             Assert.That(Regex.IsMatch(job.Solution, simpleSolutionPattern));
         }
+
+        [Test]
+        public void Order_of_operations()
+        {
+            Assert.That(3 + 2 * 5, Is.EqualTo(13));
+            Assert.That((3 + 2) * 5, Is.EqualTo(25));
+        }
     }
 }
