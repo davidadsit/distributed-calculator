@@ -54,6 +54,8 @@ namespace coordinator
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseMiddleware<UnhandledExceptionMiddleware>();
+
             app.UseMvc(routes => { routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
         }
     }
