@@ -10,7 +10,7 @@
     "worker": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://172.16.5.8:6010",
+      "applicationUrl": "http://144.17.10.32:6010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

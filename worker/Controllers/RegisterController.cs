@@ -10,7 +10,7 @@ namespace worker.Controllers
     {
         public IActionResult Index(RegistrationRequest registrationRequest)
         {
-            var client = new RestClient("http://172.16.5.8:6005");
+            var client = new RestClient("http://144.17.10.32:5000");
             var request = new RestRequest("register", Method.POST);
             request.AddJsonBody(registrationRequest);
 
