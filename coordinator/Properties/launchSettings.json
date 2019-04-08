@@ -1,19 +1,25 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://172.16.5.8:6005"
+      "applicationUrl": "http://localhost",
+      "sslPort": 0
     }
   },
   "profiles": {
     "coordinator": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://172.16.5.8:6005",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}"
     }
   }
 }
