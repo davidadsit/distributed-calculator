@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
@@ -17,7 +18,7 @@ namespace coordinator.Application
 
     public class WorkerRegistry : IWorkerRegistry
     {
-        private static readonly Dictionary<Guid, WorkerRegistration> workers = new Dictionary<Guid, WorkerRegistration>();
+        private static readonly ConcurrentDictionary<Guid, WorkerRegistration> workers = new ConcurrentDictionary<Guid, WorkerRegistration>();
 
         public WorkerRegistrationResult RegisterWorker(WorkerRegistration workerRegistration)
         {
@@ -31,7 +32,7 @@ namespace coordinator.Application
                 };
             }
 
-            workers.Add(workerRegistration.WorkerId, workerRegistration);
+            workers.TryAdd(workerRegistration.WorkerId, workerRegistration);
             return new WorkerRegistrationResult
             {
                 Result =
@@ -41,7 +42,8 @@ namespace coordinator.Application
 
         public void DeregisterWorker(Guid workerId)
         {
-            if (workers.ContainsKey(workerId)) workers.Remove(workerId);
+            WorkerRegistration w;
+            if (workers.ContainsKey(workerId)) workers.TryRemove(workerId, out w);
         }
 
         public IEnumerable<WorkerRegistration> ActiveWorkers => workers.Values.Where(x => x.FailedResponses < 4);

@@ -6,7 +6,7 @@
 
 <h2>Registered Workers</h2>
 <ul>
-    @foreach (var worker in Model.ActiveWorkers)
+    @foreach (var worker in Model.ActiveWorkers.ToArray())
     {
         <li>@worker.TeamName (@worker.WorkerId) has answered correctly @worker.CorrectResponses times and incorrectly @worker.IncorrectResponses times</li>
     }
