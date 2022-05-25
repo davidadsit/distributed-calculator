@@ -1,7 +1,6 @@
-﻿namespace coordinator.Models
+﻿namespace coordinator.Models;
+
+public class RegistrationResult
 {
-    public class RegistrationResult
-    {
-        public string Result { get; set; }
-    }
+    public string Result { get; set; }
 }

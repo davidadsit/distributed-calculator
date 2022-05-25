@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using coordinator.Application;
+﻿using coordinator.Application;
 
-namespace coordinator.Models
+namespace coordinator.Models;
+
+public class StatusResult
 {
-    public class StatusResult
-    {
-        public IEnumerable<WorkerRegistration> ActiveWorkers { get; set; }
-        public IEnumerable<WorkerRegistration> InactiveWorkers { get; set; }
-        public IEnumerable<Assignment> RecentJobs { get; set; }
-    }
+    public IEnumerable<WorkerRegistration> ActiveWorkers { get; set; }
+    public IEnumerable<WorkerRegistration> InactiveWorkers { get; set; }
+    public IEnumerable<Assignment> RecentJobs { get; set; }
 }
