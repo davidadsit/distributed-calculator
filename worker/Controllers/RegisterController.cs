@@ -7,9 +7,11 @@ namespace worker.Controllers;
 
 public class RegisterController : Controller
 {
+    private const string coordinatorHostname = "http://localhost";
+
     public IActionResult Index(RegistrationRequest registrationRequest)
     {
-        var client = new RestClient("http://144.17.10.32:5000");
+        var client = new RestClient(coordinatorHostname);
         var request = new RestRequest("register", Method.Post);
         request.AddJsonBody(registrationRequest);
 
