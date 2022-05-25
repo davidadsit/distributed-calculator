@@ -1,7 +1,6 @@
-﻿namespace worker.Models
+﻿namespace worker.Models;
+
+public class RegisterResult
 {
-    public class RegisterResult
-    {
-        public string Message { get; set; }
-    }
+    public string Message { get; set; }
 }

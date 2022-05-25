@@ -2,27 +2,26 @@
 using coordinator.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace coordinator.Controllers
+namespace coordinator.Controllers;
+
+public class StatusController : Controller
 {
-    public class StatusController : Controller
+    private readonly IWorkerRegistry workerRegistry;
+    private readonly IJobAssignments jobAssignments;
+
+    public StatusController(IWorkerRegistry workerRegistry, IJobAssignments jobAssignments)
     {
-        private readonly IWorkerRegistry workerRegistry;
-        private readonly IJobAssignments jobAssignments;
+        this.workerRegistry = workerRegistry;
+        this.jobAssignments = jobAssignments;
+    }
 
-        public StatusController(IWorkerRegistry workerRegistry, IJobAssignments jobAssignments)
+    public ActionResult Index()
+    {
+        return View(new StatusResult
         {
-            this.workerRegistry = workerRegistry;
-            this.jobAssignments = jobAssignments;
-        }
-
-        public ActionResult Index()
-        {
-            return View(new StatusResult
-            {
-                ActiveWorkers = workerRegistry.ActiveWorkers,
-                InactiveWorkers = workerRegistry.InactiveWorkers,
-                RecentJobs = jobAssignments.RecentAssignments
-            });
-        }
+            ActiveWorkers = workerRegistry.ActiveWorkers,
+            InactiveWorkers = workerRegistry.InactiveWorkers,
+            RecentJobs = jobAssignments.RecentAssignments
+        });
     }
 }

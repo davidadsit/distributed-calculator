@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace coordinator.Application;
 
-namespace coordinator.Application
+public class JobRequest
 {
-    public class JobRequest
-    {
-        public Guid JobId { get; } = Guid.NewGuid();
-        public string Calculation { get; set; }
-    }
+    public Guid JobId { get; } = Guid.NewGuid();
+    public string Calculation { get; set; }
 }

@@ -1,7 +1,6 @@
-﻿namespace coordinator.Application
+﻿namespace coordinator.Application;
+
+public class WorkerRegistrationResult
 {
-    public class WorkerRegistrationResult
-    {
-        public string Result { get; set; }
-    }
+    public string Result { get; set; }
 }

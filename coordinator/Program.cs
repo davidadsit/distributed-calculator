@@ -1,18 +1,28 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+using coordinator;
+using coordinator.Application;
 
-namespace coordinator
+var builder = WebApplication.CreateBuilder(args);
+
+// Configure IoC container
+builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<IWorkerRegistry, WorkerRegistry>();
+builder.Services.AddSingleton<IJobAssignments, JobAssignments>();
+builder.Services.AddTransient<IJobPool, JobPool>();
+builder.Services.AddHostedService<JobAssignmentService>();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline
+if (!app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
-
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args).UseStartup<Startup>();
-        }
-    }
+    app.UseExceptionHandler("/Home/Error");
 }
+
+app.UseMiddleware<UnhandledExceptionMiddleware>();
+app.UseStaticFiles();
+app.UseRouting();
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();

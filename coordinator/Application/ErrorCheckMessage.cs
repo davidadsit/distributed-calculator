@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace coordinator.Application;
 
-namespace coordinator.Application
+public class ErrorCheckMessage
 {
-    public class ErrorCheckMessage
-    {
-        public Guid JobId { get; set; }
-        public string ErrorMessage { get; set; }
-    }
+    public Guid JobId { get; set; }
+    public string ErrorMessage { get; set; }
 }

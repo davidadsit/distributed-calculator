@@ -1,31 +1,27 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿namespace coordinator;
 
-namespace coordinator
+public class UnhandledExceptionMiddleware
 {
-    public class UnhandledExceptionMiddleware
+    private readonly ILogger<UnhandledExceptionMiddleware> logger;
+    private readonly RequestDelegate next;
+
+    public UnhandledExceptionMiddleware(RequestDelegate next, ILogger<UnhandledExceptionMiddleware> logger)
     {
-        private readonly ILogger<UnhandledExceptionMiddleware> logger;
+        this.logger = logger;
+        this.next = next;
+    }
 
-        public UnhandledExceptionMiddleware(ILogger<UnhandledExceptionMiddleware> logger)
+    public Task InvokeAsync(HttpContext context)
+    {
+        try
         {
-            this.logger = logger;
+            return next(context);
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, $"Uncaught exception in {context.Request.Path}: {e.Message}");
         }
 
-        public Task InvokeAsync(HttpContext context, RequestDelegate next)
-        {
-            try
-            {
-                return next(context);
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e, $"Uncaught exception in {context.Request.Path}: {e.Message}");
-            }
-
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }
