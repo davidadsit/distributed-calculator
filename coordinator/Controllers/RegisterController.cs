@@ -16,6 +16,7 @@ public class RegisterController : Controller
     [HttpPost]
     public RegistrationResult Index([FromBody] RegistrationRequest registrationRequest)
     {
+        if (registrationRequest == null) return new RegistrationResult { Result = "Invalid registration request. The worker ID may not be a valid GUID." };
         try
         {
             new Uri(registrationRequest.CreateJobEndpoint);
