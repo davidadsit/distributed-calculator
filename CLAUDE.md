@@ -25,7 +25,20 @@ dotnet run --project coordinator
 
 # Run a worker (ASP.NET Core web app)
 dotnet run --project worker
+
+# Build and test Docker image (coordinator only)
+docker build -t coordinator-test coordinator/
+docker run -d --name coordinator-test-container -p 8080:80 coordinator-test
+curl http://localhost:8080/
+docker stop coordinator-test-container && docker rm coordinator-test-container
 ```
+
+## Docker
+
+The coordinator has a Dockerfile at `coordinator/Dockerfile`. When upgrading .NET versions:
+1. Update the base images (`mcr.microsoft.com/dotnet/aspnet` and `mcr.microsoft.com/dotnet/sdk`) to match the target framework
+2. Build the Docker image and run it to verify it works
+3. Test that the web app responds (e.g., `curl http://localhost:8080/`)
 
 ## Architecture Overview
 
